@@ -3,26 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <title>Page Not Found</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin-top: 10%;
+    }
+    #path {
+      font-weight: bold;
+      color: red;
+    }
+  </style>
 </head>
 <body>
   <h1>404 - Page Not Found</h1>
   <p>You tried to visit: <span id="path"></span></p>
 
   <script>
-    // Show which page was missing
-    document.getElementById("path").textContent = window.location.pathname;
+    // Show the path to the user
+    const path = window.location.pathname + window.location.search;
+    document.getElementById("path").textContent = path;
 
-    // FREE LOGGING - Replace URL below with your webhook.site link
-    fetch("https://webhook.site/531487b3-3912-47bd-b447-a6038bc5b8db", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        page: window.location.pathname,
-        time: new Date().toISOString(),
-        referrer: document.referrer,
-        userAgent: navigator.userAgent
-      })
+    // Send to webhook.site using GET (no CORS issue)
+    const params = new URLSearchParams({
+      page: path,
+      time: new Date().toISOString(),
+      referrer: document.referrer,
+      userAgent: navigator.userAgent
     });
+
+    // Replace with your unique webhook.site URL
+    fetch("https://webhook.site/531487b3-3912-47bd-b447-a6038bc5b8db?" + params)
+      .catch(err => console.error("Log failed:", err));
   </script>
 </body>
 </html>
